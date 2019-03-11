@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/colorAccent"
+    android:layout_margin="16dp">
+
+    <ImageView
+        android:id="@+id/imgMisDog"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="30dp">
+
+        <TextView
+            android:id="@+id/txtMisNom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FIRULAIS"
+            android:textStyle="bold"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/txtMisRaza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chihuahueño"
+            android:textSize="17dp"/>
+
+        <TextView
+            android:id="@+id/txtMisColonia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Colonia Colinas del Sol"
+            android:textSize="17dp"/>
+
+        <TextView
+            android:id="@+id/txtMisFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="23 de febrero de 2019"
+            android:textSize="17dp"/>
+    </LinearLayout>
+</LinearLayout>

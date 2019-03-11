@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mydogs"
+            android:icon="@drawable/mydogs"
+            android:title="My Dogs" />
+        <item
+            android:id="@+id/nav_match"
+            android:icon="@drawable/match"
+            android:title="MATCH" />
+        <item
+            android:id="@+id/nav_missings"
+            android:icon="@drawable/missing"
+            android:title="Missing Dogs" />
+        <item
+            android:id="@+id/nav_collar"
+            android:icon="@drawable/collar"
+            android:title="COLLAR" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="Acerca de" />
+        </menu>
+    </item>
+
+</menu>
