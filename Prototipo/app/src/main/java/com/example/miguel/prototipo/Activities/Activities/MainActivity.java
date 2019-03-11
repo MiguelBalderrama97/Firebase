@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private ImageView imgNull;
 
     private boolean vacio = true;
-    //Comentario chido
+    //Comentario chido obvis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
