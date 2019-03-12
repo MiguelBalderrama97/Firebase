@@ -1,6 +1,7 @@
 package com.example.miguel.prototipo.Activities.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,13 +22,15 @@ import java.util.List;
 
 public class MyDogs extends AppCompatActivity {
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
 
     private ListView listMyDogs;
 
     private List<Perro> perros = new ArrayList<>();
     private AdapterMyDogs adapterMyDogs;
+
+    private Intent inAddDog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,8 @@ public class MyDogs extends AppCompatActivity {
 //            perro.setImg2(R.mipmap.ic_perro3);
 //            perro.setIm3(R.mipmap.ic_perro4);
 //            reference.push().setValue(perro);
+            inAddDog = new Intent(this, AddMyDog.class);
+            startActivity(inAddDog);
             return true;
         }
 

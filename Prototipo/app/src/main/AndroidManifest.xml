@@ -26,6 +26,7 @@
             android:label="@string/title_activity_especific_missing_dog"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.Activities.MyDogs" />
+        <activity android:name=".Activities.Activities.AddMyDog"></activity>
     </application>
 
 </manifest>
