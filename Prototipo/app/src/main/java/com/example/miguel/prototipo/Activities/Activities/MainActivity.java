@@ -31,7 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
 
-    private static String PATH_DOGS = "perros";
+    public static String PATH_DOGS = "perros";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference(PATH_DOGS);
@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Perro currentDog = dataSnapshot.getValue(Perro.class);
                 currentDog.setId(dataSnapshot.getKey());
-                if(currentDog.isEstatus()){
+//                if(currentDog.isEstatus()){
                     perros.add(currentDog);
                     vacio = false;
-                }
+//                }
                 myAdapter.notifyDataSetChanged();
                 if(vacio){
                     listView.setVisibility(View.GONE);
@@ -121,23 +121,21 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Perro perro = new Perro(R.mipmap.ic_perro,5,"Perrito","Chihuahua","Mike",false);
-            perro.setColonia("jaja");
-            perro.setFecha("jaja");
+            Perro perro = new Perro(R.mipmap.ic_perro2,5,"Perrito","Chihuahua","Mike",false);
+            perro.setColonia("Saucito");
+            perro.setFecha("11 de marzo");
+            perro.setImg1(R.mipmap.ic_perro);
+            perro.setImg2(R.mipmap.ic_perro3);
+            perro.setIm3(R.mipmap.ic_perro4);
             reference.push().setValue(perro);
             return true;
         }
@@ -176,4 +174,5 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         inMissDog.putExtras(bundle);
         startActivity(inMissDog);
     }
+
 }

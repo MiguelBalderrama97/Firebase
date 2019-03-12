@@ -28,11 +28,18 @@
         android:orientation="vertical"
         android:padding="50dp">
 
-        <ImageView
-            android:id="@+id/imgEspe"
+        <!--<ImageView-->
+            <!--android:id="@+id/imgEspe"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--app:srcCompat="@mipmap/ic_perro" />-->
+
+        <ahmed.easyslider.EasySlider
+            android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:srcCompat="@mipmap/ic_perro" />
+            android:layout_height="250dp">
+
+        </ahmed.easyslider.EasySlider>
 
         <TextView
             android:id="@+id/textView2"
@@ -70,7 +77,7 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha:"
+            android:text="Fecha desaparecido:"
             android:textStyle="bold"
             android:textSize="30dp"/>
 
