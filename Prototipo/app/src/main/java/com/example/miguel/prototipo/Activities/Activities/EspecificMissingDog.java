@@ -1,6 +1,7 @@
 package com.example.miguel.prototipo.Activities.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +38,8 @@ public class EspecificMissingDog extends AppCompatActivity {
 
     private EasySlider easySlider;
     private List<SliderItem> sliderItems = new ArrayList<>();
+
+    private Intent inMarcar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +96,9 @@ public class EspecificMissingDog extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String sTel = "tel:6141227624";
+                inMarcar = new Intent(Intent.ACTION_DIAL,Uri.parse(sTel));
+                startActivity(inMarcar);
             }
         });
     }
