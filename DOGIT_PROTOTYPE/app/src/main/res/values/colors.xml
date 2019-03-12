@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#91BCAB</color>
+    <color name="colorPrimaryDark">#419394</color>
+    <color name="colorAccent">#F6646C</color>
+
+    <color name="aqcua">#419394</color>
+    <color name="gris">#91BCAB</color>
+    <color name="crema">#DDE1C8</color>
+    <color name="rosa">#F6646C</color>
+    <color name="azul_rey">#050946</color>
+</resources>
