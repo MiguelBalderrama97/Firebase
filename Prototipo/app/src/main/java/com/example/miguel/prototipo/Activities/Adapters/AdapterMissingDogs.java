@@ -14,13 +14,13 @@ import com.example.miguel.prototipo.R;
 
 import java.util.List;
 
-public class MyAdapter extends BaseAdapter {
+public class AdapterMissingDogs extends BaseAdapter {
 
     private Context context;
     private int layout;
     private List<Perro> perros;
 
-    public MyAdapter(Context context, int layout, List<Perro> perros) {
+    public AdapterMissingDogs(Context context, int layout, List<Perro> perros) {
         this.context = context;
         this.layout = layout;
         this.perros = perros;

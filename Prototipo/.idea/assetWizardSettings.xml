@@ -21,8 +21,8 @@
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="cropped" value="true" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="C:\Users\migue\Desktop\dog4.jpg" />
-                                      <entry key="outputName" value="ic_perro4" />
+                                      <entry key="imageAsset" value="C:\Users\migue\Desktop\huella-roja.png" />
+                                      <entry key="outputName" value="ic_huella_roj" />
                                     </map>
                                   </option>
                                 </PersistentState>

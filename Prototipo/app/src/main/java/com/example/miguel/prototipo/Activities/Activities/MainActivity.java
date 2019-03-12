@@ -17,7 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.miguel.prototipo.Activities.Adapters.MyAdapter;
+import com.example.miguel.prototipo.Activities.Adapters.AdapterMissingDogs;
 import com.example.miguel.prototipo.Activities.Models.Perro;
 import com.example.miguel.prototipo.R;
 import com.google.firebase.database.ChildEventListener;
@@ -36,16 +36,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference(PATH_DOGS);
 
-    private Intent inMissDog;
+    private Intent inMissDog, inMyDogs;
 
     private List<Perro> perros = new ArrayList<>();
-    private MyAdapter myAdapter ;
+    private AdapterMissingDogs adapterMissingDogs;
 
     private ListView listView;
     private ImageView imgNull;
 
     private boolean vacio = true;
-    //Comentario chido obvis
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         listView = findViewById(R.id.listMisDogs);
         imgNull = findViewById(R.id.imgNull);
 
-        myAdapter = new MyAdapter(this, R.layout.list_item, perros);
-        listView.setAdapter(myAdapter);
+
+        adapterMissingDogs = new AdapterMissingDogs(this, R.layout.list_item, perros);
+        listView.setAdapter(adapterMissingDogs);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,14 +77,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Perro currentDog = dataSnapshot.getValue(Perro.class);
                 currentDog.setId(dataSnapshot.getKey());
-//                if(currentDog.isEstatus()){
+
+                if(currentDog.isEstatus()){
                     perros.add(currentDog);
-                    vacio = false;
-//                }
-                myAdapter.notifyDataSetChanged();
-                if(vacio){
-                    listView.setVisibility(View.GONE);
                 }
+                adapterMissingDogs.notifyDataSetChanged();
             }
 
             @Override
@@ -119,30 +117,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            Perro perro = new Perro(R.mipmap.ic_perro2,5,"Perrito","Chihuahua","Mike",false);
-            perro.setColonia("Saucito");
-            perro.setFecha("11 de marzo");
-            perro.setImg1(R.mipmap.ic_perro);
-            perro.setImg2(R.mipmap.ic_perro3);
-            perro.setIm3(R.mipmap.ic_perro4);
-            reference.push().setValue(perro);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -150,7 +124,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         int id = item.getItemId();
 
         if (id == R.id.nav_mydogs) {
-
+            inMyDogs = new Intent(this, MyDogs.class);
+            startActivity(inMyDogs);
         } else if (id == R.id.nav_match) {
 
         } else if (id == R.id.nav_missings) {
