@@ -34,7 +34,8 @@ public class LogActivity extends AppCompatActivity {
         txtVwPwd = findViewById(R.id.txtVwPwd);
         btnSignIn = findViewById(R.id.btnSignIn);
 
-        inTest = new Intent(getApplicationContext(),MainActivity.class);
+        inTest = new Intent(getApplicationContext(),
+                MainActivity.class);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

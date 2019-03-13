@@ -13,6 +13,7 @@ import com.example.miguel.prototipo.Activities.Models.Perro;
 import com.example.miguel.prototipo.R;
 
 import java.util.List;
+import java.util.function.ToDoubleBiFunction;
 
 public class AdapterMyDogs extends BaseAdapter {
 
@@ -58,7 +59,8 @@ public class AdapterMyDogs extends BaseAdapter {
 
         Perro currentDog = perros.get(position);
         txtNom.setText(currentDog.getNombre());
-        imgDog.setImageResource(currentDog.getIcon());
+        //TODO: Arreglar los iconos
+//        imgDog.setImageResource(currentDog.getIcon());
 
         if(currentDog.isEstatus()){
             imgMyDogStatus.setImageResource(R.mipmap.ic_huella_roj);
