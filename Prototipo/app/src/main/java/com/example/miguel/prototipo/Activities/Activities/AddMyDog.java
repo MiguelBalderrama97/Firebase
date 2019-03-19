@@ -8,9 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.miguel.prototipo.Activities.Models.Perro;
 import com.example.miguel.prototipo.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AddMyDog extends AppCompatActivity {
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +29,13 @@ public class AddMyDog extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddMyDog.this, "Perro agregado [SIN FUNCIONAR AUN]", Toast.LENGTH_LONG).show();
+                Perro perro = new Perro(R.mipmap.ic_perro2,5,"Perrito","Chihuahua","Mike",true);
+                perro.setColonia("Colinas del Sol");
+                perro.setFecha("19 de marzo");
+                perro.setImg1(R.mipmap.ic_perro);
+                perro.setImg2(R.mipmap.ic_perro3);
+                perro.setIm3(R.mipmap.ic_perro4);
+                reference.push().setValue(perro);
             }
         });
     }
