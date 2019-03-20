@@ -23,7 +23,7 @@ public class AddMyDog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_my_dog);
 
-        getSupportActionBar().setTitle("NUEVO PERRO");
+        getSupportActionBar().setTitle("Agregar a mis perros...");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {

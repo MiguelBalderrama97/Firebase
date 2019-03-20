@@ -29,14 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
 
     public static String PATH_DOGS = "perros";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference(PATH_DOGS);
 
-    private Intent inMissDog, inMyDogs;
+    private Intent inMissDog, inMyDogs, inAbout;
 
     private List<Perro> perros = new ArrayList<>();
     private AdapterMissingDogs adapterMissingDogs;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 Perro currentDog = dataSnapshot.getValue(Perro.class);
                 currentDog.setId(dataSnapshot.getKey());
 
-                if(currentDog.isEstatus()){
+                if (currentDog.isEstatus()) {
                     perros.add(currentDog);
                 }
                 adapterMissingDogs.notifyDataSetChanged();
@@ -133,6 +133,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         } else if (id == R.id.nav_collar) {
 
         } else if (id == R.id.nav_about) {
+            inAbout = new Intent(this, About.class);
+            startActivity(inAbout);
+        } else if (id == R.id.nav_log_out) {
 
         }
 
@@ -145,7 +148,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
         inMissDog = new Intent(this, EspecificMissingDog.class);
-        bundle.putString("ID",perros.get(position).getId());
+        bundle.putString("ID", perros.get(position).getId());
         inMissDog.putExtras(bundle);
         startActivity(inMissDog);
     }
