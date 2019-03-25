@@ -93,4 +93,38 @@
 
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
+
+    <string-array name="razas_array">
+        <item>Bulldog</item>
+        <item>French Poodle</item>
+        <item>Poodle</item>
+        <item>Labrador</item>
+        <item>Pastor Aleman</item>
+        <item>Chihuahua</item>
+        <item>Pug</item>
+        <item>Husky</item>
+        <item>Boxer</item>
+        <item>Pomerania</item>
+        <item>Golden</item>
+        <item>Rottweiler</item>
+        <item>Cocker</item>
+        <item>Bull terrier</item>
+        <item>Akita</item>
+        <item>Gran Danes</item>
+        <item>Cavalier</item>
+        <item>Lebrel</item>
+        <item>Chow Chow</item>
+        <item>Salchicha</item>
+        <item>Dalmata</item>
+        <item>Pastor Ingles</item>
+        <item>San Bernardo</item>
+        <item>Vaquero</item>
+        <item>Schnauzer</item>
+        <item>Beagle</item>
+    </string-array>
+
+    <string-array name="gener_array">
+        <item>Femenino</item>
+        <item>Masculino</item>
+    </string-array>
 </resources>

@@ -60,7 +60,7 @@ public class AdapterMissingDogs extends BaseAdapter {
 
         Perro currentDog = perros.get(position);
         //TODO: Arreglar icono
-        imgDog.setImageResource(currentDog.getIcon());
+        //imgDog.setImageResource(currentDog.getIcon());
         txtNom.setText(currentDog.getNombre());
         txtCol.setText("Colonia: "+currentDog.getColonia());
         txtFecha.setText("Fecha: "+currentDog.getFecha());

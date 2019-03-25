@@ -11,16 +11,16 @@ public class Perro {
 
     public Perro(){}
 
-    public Perro(int icon, int edad, String nombre, String raza, String dueño, boolean estatus) {
+    public Perro(int icon, int edad, int img1, int img2, int im3, String id, String nombre, String raza, String dueño) {
         this.icon = icon;
         this.edad = edad;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.im3 = im3;
+        this.id = id;
         this.nombre = nombre;
         this.raza = raza;
         this.dueño = dueño;
-        this.estatus = estatus;
-        this.colonia = "";
-        this.fecha = "";
-        this.id = "";
     }
 
     public String getId() {
