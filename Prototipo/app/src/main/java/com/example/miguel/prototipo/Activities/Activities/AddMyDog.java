@@ -89,13 +89,9 @@ public class AddMyDog extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Perro perro = new Perro(R.mipmap.ic_perro2, 5, "Perrito", "Chihuahua", "Mike", true);
-//                perro.setColonia("Colinas del Sol");
-//                perro.setFecha("19 de marzo");
-//                perro.setImg1(R.mipmap.ic_perro);
-//                perro.setImg2(R.mipmap.ic_perro3);
-//                perro.setIm3(R.mipmap.ic_perro4);
+//                Perro perro = new Perro(R.mipmap.ic_perro2,2,R.mipmap.ic_perro,R.mipmap.ic_perro3,R.mipmap.ic_perro4,"Black","Bulldog","Mike",false);
 //                reference.push().setValue(perro);
+                Toast.makeText(AddMyDog.this, "NO HACE NADA!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,43 +100,29 @@ public class AddMyDog extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case PICTURE_FROM_CAMERA:
-                if (resultCode == Activity.RESULT_OK) {
-                    String result = data.toUri(0);
-                    Toast.makeText(this, "Result: " + result, Toast.LENGTH_SHORT).show();
-                    icon1.setImageResource(R.mipmap.ic_checked);
-                } else {
-                    Toast.makeText(this, "No funciono!!", Toast.LENGTH_SHORT).show();
-                }
+                takePhoto(resultCode,data,icon1);
                 break;
             case PICTURE_FROM_CAMERA2:
-                if (resultCode == Activity.RESULT_OK) {
-                    String result = data.toUri(0);
-                    Toast.makeText(this, "Result: " + result, Toast.LENGTH_SHORT).show();
-                    icon2.setImageResource(R.mipmap.ic_checked);
-                } else {
-                    Toast.makeText(this, "No funciono!!", Toast.LENGTH_SHORT).show();
-                }
+                takePhoto(resultCode,data,icon2);
                 break;
             case PICTURE_FROM_CAMERA3:
-                if (resultCode == Activity.RESULT_OK) {
-                    String result = data.toUri(0);
-                    Toast.makeText(this, "Result: " + result, Toast.LENGTH_SHORT).show();
-                    icon3.setImageResource(R.mipmap.ic_checked);
-                } else {
-                    Toast.makeText(this, "No funciono!!", Toast.LENGTH_SHORT).show();
-                }
+                takePhoto(resultCode,data,icon3);
                 break;
             case PICTURE_FROM_CAMERA4:
-                if (resultCode == Activity.RESULT_OK) {
-                    String result = data.toUri(0);
-                    Toast.makeText(this, "Result: " + result, Toast.LENGTH_SHORT).show();
-                    icon4.setImageResource(R.mipmap.ic_checked);
-                } else {
-                    Toast.makeText(this, "No funciono!!", Toast.LENGTH_SHORT).show();
-                }
+                takePhoto(resultCode,data,icon4);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void takePhoto(int resultCode, Intent data, ImageView icon){
+        if (resultCode == Activity.RESULT_OK) {
+            String result = data.toUri(0);
+            Toast.makeText(this, "Result: " + result, Toast.LENGTH_SHORT).show();
+            icon.setImageResource(R.mipmap.ic_checked);
+        } else {
+            Toast.makeText(this, "Foto cancelada", Toast.LENGTH_SHORT).show();
         }
     }
 }

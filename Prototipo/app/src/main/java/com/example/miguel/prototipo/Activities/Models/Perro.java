@@ -4,23 +4,27 @@ public class Perro {
 
     private int icon, edad, img1, img2, im3;
     private String id, nombre,raza,dueño;
+    private Boolean sexo;
 
-    //    DATOS POR SI ESTA DESAPECIDO
+    //    DATOS POR SI ESTA DESAPARECIDO
     private String colonia, fecha;
     private boolean estatus;
 
     public Perro(){}
 
-    public Perro(int icon, int edad, int img1, int img2, int im3, String id, String nombre, String raza, String dueño) {
+    public Perro(int icon, int edad, int img1, int img2, int im3, String nombre, String raza, String dueño, boolean sexo) {
         this.icon = icon;
         this.edad = edad;
         this.img1 = img1;
         this.img2 = img2;
         this.im3 = im3;
-        this.id = id;
         this.nombre = nombre;
         this.raza = raza;
         this.dueño = dueño;
+        this.sexo = sexo;
+        this.estatus = false;
+        this.colonia = "";
+        this.fecha = "";
     }
 
     public String getId() {

@@ -60,7 +60,7 @@ public class AdapterMyDogs extends BaseAdapter {
         Perro currentDog = perros.get(position);
         txtNom.setText(currentDog.getNombre());
         //TODO: Arreglar los iconos
-        //imgDog.setImageResource(currentDog.getIcon());
+        imgDog.setImageResource(currentDog.getIcon());
 
         if(currentDog.isEstatus()){
             imgMyDogStatus.setImageResource(R.mipmap.ic_huella_roj);
