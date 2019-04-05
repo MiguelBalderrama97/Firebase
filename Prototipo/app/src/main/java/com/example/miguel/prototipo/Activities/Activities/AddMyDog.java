@@ -2,6 +2,7 @@ package com.example.miguel.prototipo.Activities.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +23,7 @@ import com.example.miguel.prototipo.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AddMyDog extends AppCompatActivity {
+public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinnerRaza;
     private ImageButton btnImg1, btnImg2, btnImg3, btnImg4;
@@ -32,6 +33,8 @@ public class AddMyDog extends AppCompatActivity {
     private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
 
     private Intent inCamera = new Intent("android.media.action.IMAGE_CAPTURE");
+
+    private Bitmap img1, img2, img3, img4;
 
     private final int PICTURE_FROM_CAMERA = 50;
     private final int PICTURE_FROM_CAMERA2 = 100;
@@ -57,6 +60,8 @@ public class AddMyDog extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.razas_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRaza.setAdapter(adapter);
+
+        spinnerRaza.setOnItemSelectedListener(this);
 
         getSupportActionBar().setTitle("Agregar a mis perros...");
 
@@ -89,9 +94,12 @@ public class AddMyDog extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Perro perro = new Perro(R.mipmap.ic_perro2,2,R.mipmap.ic_perro,R.mipmap.ic_perro3,R.mipmap.ic_perro4,"Black","Bulldog","Mike",false);
-//                reference.push().setValue(perro);
-                Toast.makeText(AddMyDog.this, "NO HACE NADA!!!", Toast.LENGTH_SHORT).show();
+                Perro perro = new Perro(R.mipmap.ic_perro,2,
+                        R.mipmap.ic_perro2,R.mipmap.ic_perro3,R.mipmap.ic_perro4,
+                        "Black","Bulldog","Mike",true);
+                reference.push().setValue(perro);
+                Toast.makeText(AddMyDog.this, "Perro agregado!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -100,29 +108,40 @@ public class AddMyDog extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case PICTURE_FROM_CAMERA:
-                takePhoto(resultCode,data,icon1);
+                img1 = takePhoto(resultCode,data,icon1);
                 break;
             case PICTURE_FROM_CAMERA2:
-                takePhoto(resultCode,data,icon2);
+                img2 = takePhoto(resultCode,data,icon2);
                 break;
             case PICTURE_FROM_CAMERA3:
-                takePhoto(resultCode,data,icon3);
+                img3 = takePhoto(resultCode,data,icon3);
                 break;
             case PICTURE_FROM_CAMERA4:
-                takePhoto(resultCode,data,icon4);
+                img4 = takePhoto(resultCode,data,icon4);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void takePhoto(int resultCode, Intent data, ImageView icon){
+    private Bitmap takePhoto(int resultCode, Intent data, ImageView icon){
         if (resultCode == Activity.RESULT_OK) {
-            String result = data.toUri(0);
-            Toast.makeText(this, "Result: " + result, Toast.LENGTH_SHORT).show();
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
             icon.setImageResource(R.mipmap.ic_checked);
+            return photo;
         } else {
             Toast.makeText(this, "Foto cancelada", Toast.LENGTH_SHORT).show();
+            return null;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, parent.getItemAtPosition(position)+"", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

@@ -58,7 +58,6 @@ public class EspecificMissingDog extends AppCompatActivity {
         Bundle bDatos = inDatos.getExtras();
 
         final String ID = bDatos.getString("ID");
-
         DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS).child(ID);
 
         reference.addValueEventListener(new ValueEventListener() {

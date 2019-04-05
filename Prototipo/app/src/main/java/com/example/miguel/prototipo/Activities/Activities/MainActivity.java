@@ -32,9 +32,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
 
     public static String PATH_DOGS = "perros";
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference = database.getReference(PATH_DOGS);
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference = database.getReference(PATH_DOGS);
 
     private Intent inMissDog, inMyDogs, inAbout;
 

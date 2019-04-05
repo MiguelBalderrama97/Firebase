@@ -1,8 +1,10 @@
 package com.example.miguel.prototipo.Activities.Models;
 
+import android.graphics.Bitmap;
+
 public class Perro {
 
-    private int icon, edad, img1, img2, im3;
+    private int icon, img1, img2, im3, edad;
     private String id, nombre,raza,dueño;
     private Boolean sexo;
 
@@ -26,6 +28,8 @@ public class Perro {
         this.colonia = "";
         this.fecha = "";
     }
+
+    private int x;
 
     public String getId() {
         return id;

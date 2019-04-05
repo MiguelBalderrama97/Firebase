@@ -1,12 +1,18 @@
 package com.example.miguel.prototipo.Activities.Activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.miguel.prototipo.Activities.Adapters.AdapterMyDogs;
 import com.example.miguel.prototipo.Activities.Models.Perro;
@@ -17,10 +23,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyDogs extends AppCompatActivity {
+public class MyDogs extends AppCompatActivity implements ListView.OnItemClickListener{
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
@@ -30,7 +38,8 @@ public class MyDogs extends AppCompatActivity {
     private List<Perro> perros = new ArrayList<>();
     private AdapterMyDogs adapterMyDogs;
 
-    private Intent inAddDog;
+    private Intent inAddDog, inReport;
+    private Bundle bDatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,8 @@ public class MyDogs extends AppCompatActivity {
 
         adapterMyDogs = new AdapterMyDogs(this, R.layout.list_item_mydogs, perros);
         listMyDogs.setAdapter(adapterMyDogs);
+
+        listMyDogs.setOnItemClickListener(this);
 
         reference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -57,7 +68,7 @@ public class MyDogs extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
+
             }
 
             @Override
@@ -88,18 +99,69 @@ public class MyDogs extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add_dog) {
-//            Perro perro = new Perro(R.mipmap.ic_perro2,5,"Perrito","Chihuahua","Mike",false);
-//            perro.setColonia("Saucito");
-//            perro.setFecha("11 de marzo");
-//            perro.setImg1(R.mipmap.ic_perro);
-//            perro.setImg2(R.mipmap.ic_perro3);
-//            perro.setIm3(R.mipmap.ic_perro4);
-//            reference.push().setValue(perro);
             inAddDog = new Intent(this, AddMyDog.class);
             startActivity(inAddDog);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final Perro currentDog = perros.get(position);
+
+        final DatabaseReference reference2 = reference.child(currentDog.getId());
+
+        final Dialog dlgMiDialog;
+        dlgMiDialog = new Dialog(MyDogs.this);
+        //EL LAYOUT
+        dlgMiDialog.setContentView(R.layout.cuadro_dialogo_mydogs);
+
+        TextView txtNom;
+        Button btnEdit, btnStatus;
+
+        txtNom = dlgMiDialog.findViewById(R.id.txtNomCuadroDialMyDog);
+        btnEdit = dlgMiDialog.findViewById(R.id.btnEditCuadroDialMyDog);
+        btnStatus = dlgMiDialog.findViewById(R.id.btnStatusCuadroDialMyDog);
+
+        txtNom.setText(currentDog.getNombre().toUpperCase());
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                LANZAR ACTIVITY PARA EDITAR
+            }
+        });
+
+        if(currentDog.isEstatus()){
+            btnStatus.setText("ENCONTRADO");
+            btnStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    reference2.child("estatus").setValue(false);
+                    reference2.child("fecha").setValue("");
+                    reference2.child("colonia").setValue("");
+                    finish();
+                    startActivity(getIntent());
+                    Toast.makeText(MyDogs.this, currentDog.getNombre()+" fue encontrado", Toast.LENGTH_SHORT).show();
+                    dlgMiDialog.dismiss();
+                }
+            });
+        }else{
+            btnStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dlgMiDialog.dismiss();
+                    inReport = new Intent(MyDogs.this, ReportDog.class);
+                    bDatos = new Bundle();
+                    bDatos.putString("ID", currentDog.getId());
+                    inReport.putExtras(bDatos);
+                    startActivity(inReport);
+                }
+            });
+        }
+
+        dlgMiDialog.show();
     }
 }
