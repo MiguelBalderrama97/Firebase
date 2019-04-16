@@ -54,7 +54,8 @@
             android:id="@+id/spinnerEditRaza"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingBottom="25dp"/>
+            android:paddingBottom="25dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,8 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Macho"
-                android:checked="true"/>
+                android:text="Macho"/>
             <RadioButton
                 android:id="@+id/rbFemEditDog"
                 android:layout_width="wrap_content"

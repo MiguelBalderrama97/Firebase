@@ -2,6 +2,7 @@ package com.example.miguel.prototipo.Activities.Activities;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -91,7 +92,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
     protected void onStart() {
         super.onStart();
         adapterMyDogs.notifyDataSetChanged();
-
+        Toast.makeText(this, "START!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -137,9 +138,18 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
             @Override
             public void onClick(View v) {
                 dlgMiDialog.dismiss();
+                Perro currentDog = perros.get(position);
                 bEdit = new Bundle();
                 inEdit = new Intent(MyDogs.this, EditMyDog.class);
-                bEdit.putString("ID", perros.get(position).getId());
+                bEdit.putString("ID", currentDog.getId());
+                bEdit.putString("Nombre", currentDog.getNombre());
+                bEdit.putInt("Edad", currentDog.getEdad());
+                bEdit.putInt("Spinner", currentDog.getSpinner());
+                bEdit.putBoolean("Genero", currentDog.isSexo());
+                bEdit.putInt("Img1", currentDog.getIcon());
+                bEdit.putInt("Img2", currentDog.getImg1());
+                bEdit.putInt("Img3", currentDog.getImg2());
+                bEdit.putInt("Img4", currentDog.getIm3());
                 inEdit.putExtras(bEdit);
                 startActivity(inEdit);
             }
@@ -153,7 +163,6 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
                     reference2.child("estatus").setValue(false);
                     reference2.child("fecha").setValue("");
                     reference2.child("colonia").setValue("");
-                    finish();
                     startActivity(getIntent());
                     Toast.makeText(MyDogs.this, currentDog.getNombre()+" fue encontrado", Toast.LENGTH_SHORT).show();
                     dlgMiDialog.dismiss();
@@ -168,7 +177,6 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
                     bDatos = new Bundle();
                     bDatos.putString("ID", currentDog.getId());
                     inReport.putExtras(bDatos);
-                    finish();
                     startActivity(inReport);
                 }
             });
@@ -176,4 +184,5 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
 
         dlgMiDialog.show();
     }
+
 }

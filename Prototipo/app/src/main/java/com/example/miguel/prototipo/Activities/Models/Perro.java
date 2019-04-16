@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 public class Perro {
 
-    private int icon, img1, img2, im3, edad;
+    private int icon, img1, img2, im3, edad, spinner;
     private String id, nombre,raza,dueño;
     private boolean sexo; //TRUE -> HEMBRA
 
@@ -14,7 +14,7 @@ public class Perro {
 
     public Perro(){}
 
-    public Perro(int icon, int edad, int img1, int img2, int im3, String nombre, String raza, String dueño, boolean sexo) {
+    public Perro(int icon, int edad, int img1, int img2, int im3, String nombre, String raza, String dueño, boolean sexo, int spinner) {
         this.icon = icon;
         this.edad = edad;
         this.img1 = img1;
@@ -27,6 +27,15 @@ public class Perro {
         this.estatus = false;
         this.colonia = "";
         this.fecha = "";
+        this.spinner = spinner;
+    }
+
+    public int getSpinner() {
+        return spinner;
+    }
+
+    public void setSpinner(int spinner) {
+        this.spinner = spinner;
     }
 
     public boolean isSexo() {

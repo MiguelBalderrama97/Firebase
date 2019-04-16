@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.miguel.prototipo.Activities.Activities.MyDogs;
 import com.example.miguel.prototipo.Activities.Models.Perro;
 import com.example.miguel.prototipo.R;
 
