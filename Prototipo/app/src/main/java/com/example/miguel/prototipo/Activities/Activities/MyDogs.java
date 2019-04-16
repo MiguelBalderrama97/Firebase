@@ -38,8 +38,8 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
     private List<Perro> perros = new ArrayList<>();
     private AdapterMyDogs adapterMyDogs = new AdapterMyDogs(this, R.layout.list_item_mydogs, perros);
 
-    private Intent inAddDog, inReport;
-    private Bundle bDatos;
+    private Intent inAddDog, inReport, inEdit;
+    private Bundle bDatos, bEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final Perro currentDog = perros.get(position);
 
         final DatabaseReference reference2 = reference.child(currentDog.getId());
@@ -125,7 +125,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
         dlgMiDialog.setContentView(R.layout.cuadro_dialogo_mydogs);
 
         TextView txtNom;
-        Button btnEdit, btnStatus;
+        final Button btnEdit, btnStatus;
 
         txtNom = dlgMiDialog.findViewById(R.id.txtNomCuadroDialMyDog);
         btnEdit = dlgMiDialog.findViewById(R.id.btnEditCuadroDialMyDog);
@@ -136,7 +136,12 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LANZAR ACTIVITY PARA EDITAR
+                dlgMiDialog.dismiss();
+                bEdit = new Bundle();
+                inEdit = new Intent(MyDogs.this, EditMyDog.class);
+                bEdit.putString("ID", perros.get(position).getId());
+                inEdit.putExtras(bEdit);
+                startActivity(inEdit);
             }
         });
 
