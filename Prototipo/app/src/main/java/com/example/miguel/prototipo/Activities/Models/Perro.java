@@ -6,7 +6,7 @@ public class Perro {
 
     private int icon, img1, img2, im3, edad;
     private String id, nombre,raza,dueño;
-    private Boolean sexo;
+    private boolean sexo; //TRUE -> HEMBRA
 
     //    DATOS POR SI ESTA DESAPARECIDO
     private String colonia, fecha;
@@ -29,7 +29,13 @@ public class Perro {
         this.fecha = "";
     }
 
-    private int x;
+    public boolean isSexo() {
+        return sexo;
+    }
+
+    public void setSexo(boolean sexo) {
+        this.sexo = sexo;
+    }
 
     public String getId() {
         return id;

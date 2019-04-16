@@ -26,6 +26,8 @@ public class ReportDog extends AppCompatActivity{
 
     private String fecha = "", dia, mes, annio;
 
+    private Intent inBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,8 @@ public class ReportDog extends AppCompatActivity{
                     reference.child("fecha").setValue(fecha);
                     Toast.makeText(ReportDog.this, "Perro reportado", Toast.LENGTH_SHORT).show();
                     finish();
+                    inBack = new Intent(ReportDog.this, MyDogs.class);
+                    startActivity(inBack);
                 }else{
                     Toast.makeText(ReportDog.this, "Complete los campos", Toast.LENGTH_SHORT).show();
                 }

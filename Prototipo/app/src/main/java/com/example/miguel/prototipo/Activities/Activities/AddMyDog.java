@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
     private Spinner spinnerRaza;
     private ImageButton btnImg1, btnImg2, btnImg3, btnImg4;
     private ImageView icon1, icon2, icon3, icon4;
+    private EditText etxtNom, etxtEdad;
+    private RadioButton rbMas, rbFem;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
@@ -41,10 +45,22 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
     private final int PICTURE_FROM_CAMERA3 = 150;
     private final int PICTURE_FROM_CAMERA4 = 200;
 
+    private boolean b1 = false, b2 = false, b3 = false, b4 = false;
+
+    private String nombre, raza;
+    private boolean genero;
+    private int edad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_my_dog);
+
+        etxtNom = findViewById(R.id.etxtNomAddDog);
+        etxtEdad = findViewById(R.id.etxtAgeAddDog);
+
+        rbMas = findViewById(R.id.rbMasMyDog);
+        rbFem = findViewById(R.id.rbFemMyDog);
 
         btnImg1 = findViewById(R.id.btnImg1);
         btnImg2 = findViewById(R.id.btnImg2);
@@ -94,30 +110,43 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Perro perro = new Perro(R.mipmap.ic_perro,2,
-                        R.mipmap.ic_perro2,R.mipmap.ic_perro3,R.mipmap.ic_perro4,
-                        "Black","Bulldog","Mike",true);
-                reference.push().setValue(perro);
-                Toast.makeText(AddMyDog.this, "Perro agregado!",
-                        Toast.LENGTH_SHORT).show();
+                if(etxtNom.length()==0 || etxtEdad.length()==0 || !b1 || !b2 || !b3 || !b4){
+                    Toast.makeText(AddMyDog.this, "Faltan campos", Toast.LENGTH_SHORT).show();
+                }else{
+                    nombre = etxtNom.getText().toString();
+                    edad = Integer.parseInt(etxtEdad.getText().toString());
+                    if(rbMas.isChecked()){
+                        genero = false;
+                    }else if(rbFem.isChecked()){
+                        genero = true;
+                    }
+                    Perro perro = new Perro(R.mipmap.ic_perro,edad, R.mipmap.ic_perro2,R.mipmap.ic_perro3,R.mipmap.ic_perro4, nombre,raza,"Mike", genero);
+                    reference.push().setValue(perro);
+                    Toast.makeText(AddMyDog.this, "Perro agregado", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case PICTURE_FROM_CAMERA:
                 img1 = takePhoto(resultCode,data,icon1);
+                b1 = true;
                 break;
             case PICTURE_FROM_CAMERA2:
                 img2 = takePhoto(resultCode,data,icon2);
+                b2 = true;
                 break;
             case PICTURE_FROM_CAMERA3:
                 img3 = takePhoto(resultCode,data,icon3);
+                b3 = true;
                 break;
             case PICTURE_FROM_CAMERA4:
                 img4 = takePhoto(resultCode,data,icon4);
+                b4 = true;
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -137,7 +166,7 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, parent.getItemAtPosition(position)+"", Toast.LENGTH_SHORT).show();
+        raza = parent.getItemAtPosition(position).toString();
     }
 
     @Override

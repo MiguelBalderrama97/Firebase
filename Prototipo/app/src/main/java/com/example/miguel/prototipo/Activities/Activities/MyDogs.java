@@ -36,7 +36,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
     private ListView listMyDogs;
 
     private List<Perro> perros = new ArrayList<>();
-    private AdapterMyDogs adapterMyDogs;
+    private AdapterMyDogs adapterMyDogs = new AdapterMyDogs(this, R.layout.list_item_mydogs, perros);
 
     private Intent inAddDog, inReport;
     private Bundle bDatos;
@@ -49,7 +49,6 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
 
         listMyDogs = findViewById(R.id.listMyDogs);
 
-        adapterMyDogs = new AdapterMyDogs(this, R.layout.list_item_mydogs, perros);
         listMyDogs.setAdapter(adapterMyDogs);
 
         listMyDogs.setOnItemClickListener(this);
@@ -86,6 +85,13 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapterMyDogs.notifyDataSetChanged();
+
     }
 
     @Override
@@ -157,6 +163,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
                     bDatos = new Bundle();
                     bDatos.putString("ID", currentDog.getId());
                     inReport.putExtras(bDatos);
+                    finish();
                     startActivity(inReport);
                 }
             });

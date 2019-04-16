@@ -11,12 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.Activities.EditMyDog"></activity>
         <activity
             android:name=".Activities.Activities.ReportDog"
             android:parentActivityName=".Activities.Activities.MyDogs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MyDogs"/>
+                android:value=".Activities.Activities.MyDogs" />
         </activity>
         <activity
             android:name=".Activities.Activities.About"
