@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,7 +30,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyDogs extends AppCompatActivity implements ListView.OnItemClickListener{
+public class MyDogs extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
@@ -41,6 +42,54 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
 
     private Intent inAddDog, inReport, inEdit;
     private Bundle bDatos, bEdit;
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            reference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Perro currentDog = dataSnapshot.getValue(Perro.class);
+                    currentDog.setId(dataSnapshot.getKey());
+
+                    if (currentDog.getDueño().equals("Mike")) {
+                        perros.add(currentDog);
+                    }
+                    adapterMyDogs.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+    };
+
+    private Thread thread = new Thread() {
+        @Override
+        public void run() {
+            super.run();
+            handler.post(runnable);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,45 +103,14 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
 
         listMyDogs.setOnItemClickListener(this);
 
-        reference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Perro currentDog = dataSnapshot.getValue(Perro.class);
-                currentDog.setId(dataSnapshot.getKey());
-
-                if(currentDog.getDueño().equals("Mike")){
-                    perros.add(currentDog);
-                }
-                adapterMyDogs.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        thread.start();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         adapterMyDogs.notifyDataSetChanged();
-        Toast.makeText(this, "START!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "START!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -155,7 +173,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
             }
         });
 
-        if(currentDog.isEstatus()){
+        if (currentDog.isEstatus()) {
             btnStatus.setText("ENCONTRADO");
             btnStatus.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,11 +182,11 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
                     reference2.child("fecha").setValue("");
                     reference2.child("colonia").setValue("");
                     startActivity(getIntent());
-                    Toast.makeText(MyDogs.this, currentDog.getNombre()+" fue encontrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDogs.this, currentDog.getNombre() + " fue encontrado", Toast.LENGTH_SHORT).show();
                     dlgMiDialog.dismiss();
                 }
             });
-        }else{
+        } else {
             btnStatus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

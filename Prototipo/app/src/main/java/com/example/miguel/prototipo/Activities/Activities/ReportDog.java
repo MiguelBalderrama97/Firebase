@@ -1,6 +1,7 @@
 package com.example.miguel.prototipo.Activities.Activities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import com.example.miguel.prototipo.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ReportDog extends AppCompatActivity{
+public class ReportDog extends AppCompatActivity {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
@@ -27,6 +28,43 @@ public class ReportDog extends AppCompatActivity{
     private String fecha = "", dia, mes, annio;
 
     private Intent inBack;
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+
+            reference = database.getReference(MainActivity.PATH_DOGS).child(bundle.getString("ID"));
+
+            fabReport.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (etxtColonia.length() != 0) {
+                        fecha = dia + " de " + mes + " " + annio;
+                        reference.child("estatus").setValue(true);
+                        reference.child("colonia").setValue(etxtColonia.getText().toString());
+                        reference.child("fecha").setValue(fecha);
+                        Toast.makeText(ReportDog.this, "Perro reportado", Toast.LENGTH_SHORT).show();
+                        finish();
+                        inBack = new Intent(ReportDog.this, MyDogs.class);
+                        startActivity(inBack);
+                    } else {
+                        Toast.makeText(ReportDog.this, "Complete los campos", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    };
+
+    private Thread thread = new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            handler.post(runnable);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +80,6 @@ public class ReportDog extends AppCompatActivity{
         setAdapter(R.array.days_array, spinDay);
         setAdapter(R.array.months_array, spinMonth);
         setAdapter(R.array.years_array, spinYear);
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
 
         spinDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,29 +117,11 @@ public class ReportDog extends AppCompatActivity{
             }
         });
 
-        reference = database.getReference(MainActivity.PATH_DOGS).child(bundle.getString("ID"));
-
-        fabReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etxtColonia.length() != 0){
-                    fecha = dia + " de " + mes + " " + annio;
-                    reference.child("estatus").setValue(true);
-                    reference.child("colonia").setValue(etxtColonia.getText().toString());
-                    reference.child("fecha").setValue(fecha);
-                    Toast.makeText(ReportDog.this, "Perro reportado", Toast.LENGTH_SHORT).show();
-                    finish();
-                    inBack = new Intent(ReportDog.this, MyDogs.class);
-                    startActivity(inBack);
-                }else{
-                    Toast.makeText(ReportDog.this, "Complete los campos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        thread.start();
 
     }
 
-    private void setAdapter(int array, Spinner spinner){
+    private void setAdapter(int array, Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

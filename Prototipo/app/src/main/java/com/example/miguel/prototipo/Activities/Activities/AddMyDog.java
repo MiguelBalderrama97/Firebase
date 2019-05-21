@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,42 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
     private String nombre, raza;
     private boolean genero;
     private int edad, positionSpin;
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (etxtNom.length() == 0 || etxtEdad.length() == 0 || !b1 || !b2 || !b3 || !b4) {
+                        Toast.makeText(AddMyDog.this, "Faltan campos", Toast.LENGTH_SHORT).show();
+                    } else {
+                        nombre = etxtNom.getText().toString();
+                        edad = Integer.parseInt(etxtEdad.getText().toString());
+                        if (rbMas.isChecked()) {
+                            genero = false;
+                        } else if (rbFem.isChecked()) {
+                            genero = true;
+                        }
+                        Perro perro = new Perro(R.mipmap.ic_perro, edad, R.mipmap.ic_perro2, R.mipmap.ic_perro3, R.mipmap.ic_perro4, nombre, raza, "Mike", genero, positionSpin);
+                        reference.push().setValue(perro);
+                        Toast.makeText(AddMyDog.this, "Perro agregado", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            });
+        }
+    };
+
+    private Thread thread = new Thread() {
+        @Override
+        public void run() {
+            super.run();
+            handler.post(runnable);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,27 +143,7 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(etxtNom.length()==0 || etxtEdad.length()==0 || !b1 || !b2 || !b3 || !b4){
-                    Toast.makeText(AddMyDog.this, "Faltan campos", Toast.LENGTH_SHORT).show();
-                }else{
-                    nombre = etxtNom.getText().toString();
-                    edad = Integer.parseInt(etxtEdad.getText().toString());
-                    if(rbMas.isChecked()){
-                        genero = false;
-                    }else if(rbFem.isChecked()){
-                        genero = true;
-                    }
-                    Perro perro = new Perro(R.mipmap.ic_perro,edad, R.mipmap.ic_perro2,R.mipmap.ic_perro3,R.mipmap.ic_perro4, nombre,raza,"Mike", genero, positionSpin);
-                    reference.push().setValue(perro);
-                    Toast.makeText(AddMyDog.this, "Perro agregado", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        });
+        thread.start();
     }
 
 
@@ -134,19 +151,19 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case PICTURE_FROM_CAMERA:
-                img1 = takePhoto(resultCode,data,icon1);
+                img1 = takePhoto(resultCode, data, icon1);
                 b1 = true;
                 break;
             case PICTURE_FROM_CAMERA2:
-                img2 = takePhoto(resultCode,data,icon2);
+                img2 = takePhoto(resultCode, data, icon2);
                 b2 = true;
                 break;
             case PICTURE_FROM_CAMERA3:
-                img3 = takePhoto(resultCode,data,icon3);
+                img3 = takePhoto(resultCode, data, icon3);
                 b3 = true;
                 break;
             case PICTURE_FROM_CAMERA4:
-                img4 = takePhoto(resultCode,data,icon4);
+                img4 = takePhoto(resultCode, data, icon4);
                 b4 = true;
                 break;
             default:
@@ -154,7 +171,7 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
         }
     }
 
-    private Bitmap takePhoto(int resultCode, Intent data, ImageView icon){
+    private Bitmap takePhoto(int resultCode, Intent data, ImageView icon) {
         if (resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             icon.setImageResource(R.mipmap.ic_checked);
