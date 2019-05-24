@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference(PATH_DOGS);
 
-    private Intent inMissDog, inMyDogs, inAbout;
+    private Intent inMissDog, inMyDogs, inAbout, inMatch;
 
     private List<Perro> perros = new ArrayList<>();
     private AdapterMissingDogs adapterMissingDogs;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
-    private Thread thread = new Thread(){
+    private Thread thread = new Thread() {
         @Override
         public void run() {
             super.run();
@@ -143,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             inMyDogs = new Intent(this, MyDogs.class);
             startActivity(inMyDogs);
         } else if (id == R.id.nav_match) {
-
+            inMatch = new Intent(this, MatchMainActivity.class);
+            startActivity(inMatch);
         } else if (id == R.id.nav_missings) {
 
         } else if (id == R.id.nav_collar) {

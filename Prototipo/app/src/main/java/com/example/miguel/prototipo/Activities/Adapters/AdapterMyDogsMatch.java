@@ -9,20 +9,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.miguel.prototipo.Activities.Activities.MyDogs;
 import com.example.miguel.prototipo.Activities.Models.Perro;
 import com.example.miguel.prototipo.R;
 
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
 
-public class AdapterMyDogs extends BaseAdapter {
+public class AdapterMyDogsMatch extends BaseAdapter {
 
     private Context context;
     private int layout;
     private List<Perro> perros;
 
-    public AdapterMyDogs(Context context, int layout, List<Perro> perros) {
+    public AdapterMyDogsMatch(Context context, int layout, List<Perro> perros) {
         this.context = context;
         this.layout = layout;
         this.perros = perros;
@@ -47,26 +45,19 @@ public class AdapterMyDogs extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         TextView txtNom;
-        ImageView imgDog,imgMyDogStatus;
+        ImageView imgDog;
 
         if(convertView == null){
             LayoutInflater layoutInflater = ((Activity)context).getLayoutInflater();
             convertView = layoutInflater.inflate(layout, parent, false);
         }
 
-        txtNom = convertView.findViewById(R.id.txtMyDog);
-        imgDog = convertView.findViewById(R.id.imgMyDog);
-        imgMyDogStatus = convertView.findViewById(R.id.imgMyDogStatus);
+        txtNom = convertView.findViewById(R.id.txtMyDogMatch);
+        imgDog = convertView.findViewById(R.id.imgMyDogMatch);
 
         Perro currentDog = perros.get(position);
         txtNom.setText(currentDog.getNombre());
         imgDog.setImageResource(currentDog.getIcon());
-
-        if(currentDog.isEstatus()){
-            imgMyDogStatus.setImageResource(R.mipmap.ic_huella_roj);
-        }else{
-            imgMyDogStatus.setImageResource(R.mipmap.ic_huella_verde);
-        }
 
         return convertView;
     }
