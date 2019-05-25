@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.miguel.prototipo.Activities.Adapters.AdapterMissingDogs;
 import com.example.miguel.prototipo.Activities.Models.Perro;
+import com.example.miguel.prototipo.Activities.Models.Usuario;
 import com.example.miguel.prototipo.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     private DatabaseReference reference = database.getReference(PATH_DOGS);
+    private DatabaseReference reference2 = database.getReference("usuarios");
 
     private Intent inMissDog, inMyDogs, inAbout, inMatch;
 

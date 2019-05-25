@@ -23,42 +23,42 @@
             android:parentActivityName=".Activities.Activities.SearchPartnerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.SearchPartnerActivity" />
+                android:value=".Activities.Activities.EspecificMatchDog" />
         </activity>
         <activity
             android:name=".Activities.Activities.SearchPartnerActivity"
             android:parentActivityName=".Activities.Activities.MatchMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MatchMainActivity" />
+                android:value=".Activities.Activities.SearchPartnerActivity" />
         </activity>
         <activity
             android:name=".Activities.Activities.MatchMainActivity"
             android:parentActivityName=".Activities.Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MainActivity" />
+                android:value=".Activities.Activities.MatchMainActivity" />
         </activity>
         <activity
             android:name=".Activities.Activities.EditMyDog"
             android:parentActivityName=".Activities.Activities.MyDogs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MyDogs" />
+                android:value=".Activities.Activities.EditMyDog" />
         </activity>
         <activity
             android:name=".Activities.Activities.ReportDog"
             android:parentActivityName=".Activities.Activities.MyDogs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MyDogs" />
+                android:value=".Activities.Activities.ReportDog" />
         </activity>
         <activity
             android:name=".Activities.Activities.About"
             android:parentActivityName=".Activities.Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MainActivity" />
+                android:value=".Activities.Activities.About" />
         </activity>
         <activity
             android:name=".Activities.Activities.MainActivity"
@@ -82,21 +82,21 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MainActivity" />
+                android:value=".Activities.Activities.EspecificMissingDog" />
         </activity>
         <activity
             android:name=".Activities.Activities.MyDogs"
             android:parentActivityName=".Activities.Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MainActivity" />
+                android:value=".Activities.Activities.MyDogs" />
         </activity>
         <activity
             android:name=".Activities.Activities.AddMyDog"
             android:parentActivityName=".Activities.Activities.MyDogs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.Activities.MyDogs" />
+                android:value=".Activities.Activities.AddMyDog" />
         </activity>
     </application>
 
