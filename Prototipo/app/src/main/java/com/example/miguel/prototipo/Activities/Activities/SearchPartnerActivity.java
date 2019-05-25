@@ -1,5 +1,6 @@
 package com.example.miguel.prototipo.Activities.Activities;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class SearchPartnerActivity extends AppCompatActivity implements ListView.OnItemClickListener{
 
-    private Bundle bundle;
+    private Bundle bundle, bundle2;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS);
@@ -33,6 +34,8 @@ public class SearchPartnerActivity extends AppCompatActivity implements ListView
     private AdapterMyDogsMatch adapterMyDogs = new AdapterMyDogsMatch(this, R.layout.list_item_mydogs_match, perros);
 
     private ListView listSearchPartner;
+
+    private Intent inEspecificMatch;
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -95,15 +98,41 @@ public class SearchPartnerActivity extends AppCompatActivity implements ListView
         listSearchPartner = findViewById(R.id.listSearchPartner);
 
         getSupportActionBar().setTitle("Elige una pareja");
-
         listSearchPartner.setAdapter(adapterMyDogs);
-
         thread.start();
+        listSearchPartner.setOnItemClickListener(this);
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Perro currentDog = perros.get(position);
 
+        bundle2 = new Bundle();
+        inEspecificMatch = new Intent(this, EspecificMatchDog.class);
+
+        String ID = currentDog.getId();
+        String nombre = currentDog.getNombre();
+        String raza = currentDog.getRaza();
+        int edad = currentDog.getEdad();
+        String dueño = currentDog.getDueño();
+        int img1 = currentDog.getIcon();
+        int img2 = currentDog.getImg1();
+        int img3 = currentDog.getImg2();
+        int img4 = currentDog.getIm3();
+
+        bundle2.putString("ID", ID);
+        bundle2.putString("nombre", nombre);
+        bundle2.putString("raza", raza);
+        bundle2.putString("dueño", dueño);
+        bundle2.putInt("edad", edad);
+        bundle2.putInt("img1", img1);
+        bundle2.putInt("img2", img2);
+        bundle2.putInt("img3", img3);
+        bundle2.putInt("img4", img4);
+
+        inEspecificMatch.putExtras(bundle2);
+
+        startActivity(inEspecificMatch);
     }
 }

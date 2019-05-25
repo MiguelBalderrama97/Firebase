@@ -11,13 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.Activities.SearchPartnerActivity"
+        <activity android:name=".Activities.Activities.EspecificMatchDog"
+            android:parentActivityName=".Activities.Activities.SearchPartnerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.Activities.SearchPartnerActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.Activities.SearchPartnerActivity"
             android:parentActivityName=".Activities.Activities.MatchMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.Activities.MatchMainActivity" />
         </activity>
-        <activity android:name=".Activities.Activities.MatchMainActivity"
+        <activity
+            android:name=".Activities.Activities.MatchMainActivity"
             android:parentActivityName=".Activities.Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
