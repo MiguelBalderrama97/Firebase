@@ -107,8 +107,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="C:\Users\migue\Desktop\edit.png" />
-                                      <entry key="outputName" value="ic_edit" />
+                                      <entry key="imageAsset" value="C:\Users\migue\Desktop\profile.png" />
+                                      <entry key="outputName" value="ic_profile" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Missing Dogs</string>
+    <string name="app_name">Doggit</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -93,6 +93,7 @@
 
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
+    <string name="app_nombre">Doggit</string>
 
     <string-array name="razas_array">
         <item>Bulldog</item>

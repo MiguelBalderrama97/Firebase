@@ -3,16 +3,25 @@ package com.example.miguel.prototipo.Activities.Models;
 public class Usuario {
 
     private String id, nombre, apellido, correo, pass, telefono;
+    private int foto;
 
     public Usuario(){}
 
-    public Usuario(String id, String nombre, String apellido, String correo, String pass, String telefono) {
-        this.id = id;
+    public Usuario(String nombre, String apellido, String correo, String pass, String telefono, int foto) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.pass = pass;
         this.telefono = telefono;
+        this.foto = foto;
+    }
+
+    public int getFoto() {
+        return foto;
+    }
+
+    public void setFoto(int foto) {
+        this.foto = foto;
     }
 
     public String getId() {

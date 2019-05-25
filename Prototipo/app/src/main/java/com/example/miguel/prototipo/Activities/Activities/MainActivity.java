@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.miguel.prototipo.Activities.Adapters.AdapterMissingDogs;
 import com.example.miguel.prototipo.Activities.Models.Perro;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static final String PATH_DOGS = "perros";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     private DatabaseReference reference = database.getReference(PATH_DOGS);
 
     private Intent inMissDog, inMyDogs, inAbout, inMatch;
@@ -80,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
             });
-
         }
     };
 
@@ -119,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         thread.start();
-
     }
 
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             inAbout = new Intent(this, About.class);
             startActivity(inAbout);
         } else if (id == R.id.nav_log_out) {
-
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
