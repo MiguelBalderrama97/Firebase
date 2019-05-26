@@ -2,6 +2,7 @@ package com.example.miguel.prototipo.Activities.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.miguel.prototipo.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +24,9 @@ import ahmed.easyslider.SliderItem;
 
 public class EspecificMatchDog extends AppCompatActivity {
 
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference;
+
     private Bundle bundle;
 
     private TextView txtRaza, txtEdad, txtDueño;
@@ -26,6 +35,8 @@ public class EspecificMatchDog extends AppCompatActivity {
 
     private EasySlider easySlider;
     private List<SliderItem> sliderItems = new ArrayList<>();
+
+    private String nom_dueño, ape_dueño, telefono;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +69,33 @@ public class EspecificMatchDog extends AppCompatActivity {
 
         easySlider.setPages(sliderItems);
 
+        reference = database.getReference("usuarios").child(dueño);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                nom_dueño = dataSnapshot.child("nombre").getValue(String.class);
+                ape_dueño = dataSnapshot.child("apellido").getValue(String.class);
+                telefono = dataSnapshot.child("telefono").getValue(String.class);
+
+                txtDueño.setText(nom_dueño + " " +ape_dueño.charAt(0) + ".");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         txtRaza.setText(raza);
-        txtDueño.setText(dueño);
-        txtEdad.setText(edad+" años");
+        txtEdad.setText(edad+" año(s)");
+
+
 
         fabMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sTel = "tel:6141227624";
+                String sTel = "tel:"+telefono;
                 inMarcar = new Intent(Intent.ACTION_DIAL, Uri.parse(sTel));
                 startActivity(inMarcar);
             }
