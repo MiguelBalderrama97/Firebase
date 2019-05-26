@@ -17,18 +17,23 @@ import android.widget.Toast;
 import com.example.miguel.prototipo.Activities.Models.Usuario;
 import com.example.miguel.prototipo.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class SignActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private StorageReference mStorage;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference("usuarios");
@@ -59,6 +64,8 @@ public class SignActivity extends AppCompatActivity {
         etxtNomSign = findViewById(R.id.etxtNomSign);
         etxtApeSign = findViewById(R.id.etxtApeSign);
         etxtPhoneSign = findViewById(R.id.etxtPhoneSign);
+
+        mStorage = FirebaseStorage.getInstance().getReference();
 
         txtImagenSign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +110,15 @@ public class SignActivity extends AppCompatActivity {
             imgProfileSign.setImageURI(imageUri);
             imgStatusImage.setImageResource(R.mipmap.ic_checked);
             confirm = true;
+
+            StorageReference filePath = mStorage.child("UsersPhotos").child(imageUri.getLastPathSegment());
+
+            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                }
+            });
         }
     }
 

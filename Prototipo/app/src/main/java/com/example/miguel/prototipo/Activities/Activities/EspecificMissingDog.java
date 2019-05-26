@@ -42,6 +42,8 @@ public class EspecificMissingDog extends AppCompatActivity {
 
     private Intent inMarcar;
 
+    String telefono;
+
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
@@ -50,7 +52,10 @@ public class EspecificMissingDog extends AppCompatActivity {
             Bundle bDatos = inDatos.getExtras();
 
             final String ID = bDatos.getString("ID");
-            DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS).child(ID);
+            String dueño = bDatos.getString("dueño");
+
+//            Toast.makeText(EspecificMissingDog.this, dueño+"", Toast.LENGTH_LONG).show();
+            final DatabaseReference reference = database.getReference(MainActivity.PATH_DOGS).child(ID);
 
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -59,6 +64,8 @@ public class EspecificMissingDog extends AppCompatActivity {
                     String raza = dataSnapshot.child("raza").getValue(String.class);
                     String colonia = dataSnapshot.child("colonia").getValue(String.class);
                     String fecha = dataSnapshot.child("fecha").getValue(String.class);
+                    String dueño = dataSnapshot.child("dueño").getValue(String.class);
+
                     int img1 = dataSnapshot.child("icon").getValue(Integer.class);
                     int img2 = dataSnapshot.child("img1").getValue(Integer.class);
                     int img3 = dataSnapshot.child("img2").getValue(Integer.class);
@@ -75,6 +82,20 @@ public class EspecificMissingDog extends AppCompatActivity {
                     txtEspeCol.setText(colonia);
                     txtEspeFecha.setText(fecha);
                     txtEspeRaza.setText(raza);
+
+                    DatabaseReference reference1 = database.getReference("usuarios").child(dueño);
+                    reference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            telefono = dataSnapshot.child("telefono").getValue(String.class);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
 
                 @Override
@@ -106,17 +127,18 @@ public class EspecificMissingDog extends AppCompatActivity {
         txtEspeRaza = findViewById(R.id.txtEspeRaza);
         easySlider = findViewById(R.id.slider);
 
+        thread.start();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sTel = "tel:6141227624";
+                String sTel = "tel:" + telefono;
                 inMarcar = new Intent(Intent.ACTION_DIAL, Uri.parse(sTel));
                 startActivity(inMarcar);
             }
         });
 
-        thread.start();
     }
 
 }

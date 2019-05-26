@@ -45,7 +45,7 @@ public class MatchMainActivity extends AppCompatActivity implements ListView.OnI
                     Perro currentDog = dataSnapshot.getValue(Perro.class);
                     currentDog.setId(dataSnapshot.getKey());
 
-                    if (currentDog.getDueño().equals("Mike")) {
+                    if (currentDog.getDueño().equals(MainActivity.dueño)) {
                         perros.add(currentDog);
                     }
                     adapterMyDogs.notifyDataSetChanged();

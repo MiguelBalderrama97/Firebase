@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miguel.prototipo.Activities.Adapters.AdapterMissingDogs;
@@ -28,11 +29,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
+
+    public static String dueño;
 
     public static final String PATH_DOGS = "perros";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -42,11 +46,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Intent inMissDog, inMyDogs, inAbout, inMatch;
 
+    private Bundle bundle;
+
+    private String nombre;
+    private String myID;
+
     private List<Perro> perros = new ArrayList<>();
+    private List<Usuario> users = new ArrayList<>();
     private AdapterMissingDogs adapterMissingDogs;
 
     private ListView listView;
-    private ImageView imgNull;
+    private ImageView imgNull, imgMainProfile;
+    private TextView txtMainName, txtMainEmail;
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -122,8 +133,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         thread.start();
-    }
 
+        bundle = getIntent().getExtras();
+
+        myID = bundle.getString("ID");
+
+        dueño = myID;
+
+
+        reference2.child(myID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                txtMainEmail = findViewById(R.id.txtMainEmail);
+                txtMainName = findViewById(R.id.txtMainDueño);
+                imgMainProfile = findViewById(R.id.imgMainProfile);
+
+                nombre = dataSnapshot.child("nombre").getValue(String.class);
+                String ape = dataSnapshot.child("apellido").getValue(String.class);
+                String email = dataSnapshot.child("correo").getValue(String.class);
+                int photo = dataSnapshot.child("foto").getValue(Integer.class);
+
+                txtMainName.setText(nombre + " " + ape);
+                txtMainEmail.setText(email);
+                imgMainProfile.setImageResource(photo);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -139,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_mydogs) {
@@ -168,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle bundle = new Bundle();
         inMissDog = new Intent(this, EspecificMissingDog.class);
         bundle.putString("ID", perros.get(position).getId());
+        bundle.putString("dueño", nombre);
         inMissDog.putExtras(bundle);
         startActivity(inMissDog);
     }

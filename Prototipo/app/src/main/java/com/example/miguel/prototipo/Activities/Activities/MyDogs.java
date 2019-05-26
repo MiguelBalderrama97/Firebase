@@ -41,7 +41,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
     private AdapterMyDogs adapterMyDogs = new AdapterMyDogs(this, R.layout.list_item_mydogs, perros);
 
     private Intent inAddDog, inReport, inEdit;
-    private Bundle bDatos, bEdit;
+    private Bundle bDatos, bEdit, bBack;
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -53,7 +53,7 @@ public class MyDogs extends AppCompatActivity implements ListView.OnItemClickLis
                     Perro currentDog = dataSnapshot.getValue(Perro.class);
                     currentDog.setId(dataSnapshot.getKey());
 
-                    if (currentDog.getDueño().equals("Mike")) {
+                    if (currentDog.getDueño().equals(MainActivity.dueño)) {
                         perros.add(currentDog);
                     }
                     adapterMyDogs.notifyDataSetChanged();

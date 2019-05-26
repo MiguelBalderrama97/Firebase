@@ -70,7 +70,7 @@ public class AddMyDog extends AppCompatActivity implements AdapterView.OnItemSel
                         } else if (rbFem.isChecked()) {
                             genero = true;
                         }
-                        Perro perro = new Perro(R.mipmap.ic_perro, edad, R.mipmap.ic_perro2, R.mipmap.ic_perro3, R.mipmap.ic_perro4, nombre, raza, "Mike", genero, positionSpin);
+                        Perro perro = new Perro(R.mipmap.ic_perro, edad, R.mipmap.ic_perro2, R.mipmap.ic_perro3, R.mipmap.ic_perro4, nombre, raza, MainActivity.dueño, genero, positionSpin);
                         reference.push().setValue(perro);
                         Toast.makeText(AddMyDog.this, "Perro agregado", Toast.LENGTH_SHORT).show();
                         finish();

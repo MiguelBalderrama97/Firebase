@@ -41,44 +41,7 @@ public class SearchPartnerActivity extends AppCompatActivity implements ListView
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            bundle = getIntent().getExtras();
 
-            String ID = bundle.getString("ID");
-            final Boolean sexo = bundle.getBoolean("sexo");
-            final String raza = bundle.getString("raza");
-
-            reference.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Perro currentDog = dataSnapshot.getValue(Perro.class);
-                    currentDog.setId(dataSnapshot.getKey());
-
-                    if (!currentDog.getDueño().equals("Mike") && currentDog.isSexo() != sexo && currentDog.getRaza().equals(raza)) {
-                        perros.add(currentDog);
-                    }
-                    adapterMyDogs.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
         }
     };
 
@@ -99,8 +62,50 @@ public class SearchPartnerActivity extends AppCompatActivity implements ListView
 
         getSupportActionBar().setTitle("Elige una pareja");
         listSearchPartner.setAdapter(adapterMyDogs);
-        thread.start();
+//        thread.start();
         listSearchPartner.setOnItemClickListener(this);
+
+        bundle = getIntent().getExtras();
+
+//        String ID = bundle.getString("ID");
+
+
+        reference.addChildEventListener(new ChildEventListener() {
+
+            boolean sexo = bundle.getBoolean("sexo");
+            String raza = bundle.getString("raza");
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Perro currentDog = dataSnapshot.getValue(Perro.class);
+                currentDog.setId(dataSnapshot.getKey());
+
+                if (!currentDog.getDueño().equals(MainActivity.dueño) && currentDog.isSexo() != sexo && currentDog.getRaza().equals(raza)) {
+                    perros.add(currentDog);
+                }
+                adapterMyDogs.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
