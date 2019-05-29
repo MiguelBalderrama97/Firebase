@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.miguel.prototipo">
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,35 +19,59 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.Activities.SignActivity">
-        </activity>
+            android:name=".Activities.Activities.SecurityZoneActivity"
+            android:label="@string/title_activity_security_zone"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
-            android:name=".Activities.Activities.EspecificMatchDog">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.SearchPartnerActivity">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.MatchMainActivity">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.EditMyDog">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.ReportDog">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.About">
-        </activity>
+            android:name=".Activities.Activities.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Activities.Activities.ConfMapsActivity" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".Activities.Activities.SignActivity" />
+        <activity android:name=".Activities.Activities.EspecificMatchDog" />
+        <activity android:name=".Activities.Activities.SearchPartnerActivity" />
+        <activity android:name=".Activities.Activities.MatchMainActivity" />
+        <activity android:name=".Activities.Activities.EditMyDog" />
+        <activity android:name=".Activities.Activities.ReportDog" />
+        <activity android:name=".Activities.Activities.About" />
         <activity
             android:name=".Activities.Activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Missing Dogs">
-        </activity>
+            android:label="Missing Dogs"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Activities.LogActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,14 +81,9 @@
         <activity
             android:name=".Activities.Activities.EspecificMissingDog"
             android:label="@string/title_activity_especific_missing_dog"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.MyDogs">
-        </activity>
-        <activity
-            android:name=".Activities.Activities.AddMyDog">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.Activities.MyDogs" />
+        <activity android:name=".Activities.Activities.AddMyDog" />
     </application>
 
 </manifest>
