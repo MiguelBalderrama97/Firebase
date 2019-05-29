@@ -127,7 +127,9 @@ public class LogActivity extends AppCompatActivity {
 //            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 //                Usuario user = dataSnapshot.getValue(Usuario.class);
 //                user.setId(dataSnapshot.getKey());
+
 //                dataSnapshot.get
+
 //            }
 //
 //            @Override
