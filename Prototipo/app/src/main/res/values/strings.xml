@@ -179,4 +179,6 @@
         <item>2017</item>
         <item>2016</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_security_zone">SecurityZoneActivity</string>
 </resources>

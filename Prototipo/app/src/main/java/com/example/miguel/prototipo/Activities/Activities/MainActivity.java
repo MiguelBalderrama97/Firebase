@@ -37,7 +37,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
 
     public static String dueño;
-
+    private Intent inMaps;
     public static final String PATH_DOGS = "perros";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -193,7 +193,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_missings) {
 
         } else if (id == R.id.nav_collar) {
-
+            inMaps = new Intent(this,ConfMapsActivity.class);
+            startActivity(inMaps);
         } else if (id == R.id.nav_about) {
             inAbout = new Intent(this, About.class);
             startActivity(inAbout);
