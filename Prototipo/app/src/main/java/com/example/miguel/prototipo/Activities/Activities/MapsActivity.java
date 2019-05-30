@@ -2,8 +2,8 @@ package com.example.miguel.prototipo.Activities.Activities;
 
 import android.graphics.Color;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -19,6 +19,11 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,12 +36,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference = database.getReference("usuarios").child(MainActivity.dueño);
 
     private GoogleMap mMap;
     private float DEFAULT_ZOOM= 18;
     Circle myCircle;
-    private double mLat=28.70382, mLon=-106.124489;
+    private double dogLat =28.70382, dogLon =-106.124489;
+    private int radio = 3;
+    private double cirLat =28.70382, cirLon =-106.124489;
     String s="";
     MarkerOptions markOpt;
     Marker dogMarker;
@@ -50,9 +58,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 try {
                     JSONObject jsData = new JSONObject(s);
                     System.out.println(jsData);
-                    mLat = jsData.getDouble("lat");
-                    mLon = jsData.getDouble("lon");
-                    dogMarker.setPosition(new LatLng(mLat,mLon));
+                    dogLat = jsData.getDouble("lat");
+                    dogLon = jsData.getDouble("lon");
+                    dogMarker.setPosition(new LatLng(dogLat, dogLon));
+                    isDogOnSafeArea();
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -124,37 +135,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng dogPosition = new LatLng(mLat, mLon);
+        LatLng dogPosition = new LatLng(dogLat, dogLon);
         markOpt = new MarkerOptions().position(dogPosition).title("Your dog is here!")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.petmarker));
         dogMarker = mMap.addMarker(markOpt);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dogPosition,DEFAULT_ZOOM));
 
-        //TODO:Obtener zona segura de firebase
-        myCircle = mMap.addCircle(new CircleOptions()
-                .center(new LatLng(28.70389,-106.124483))
-                .radius(50)
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.GREEN)
-        );
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                radio = dataSnapshot.child("radio").getValue(Integer.class);
+                cirLat  = dataSnapshot.child("lat").getValue(Double.class);
+                cirLon = dataSnapshot.child("lon").getValue(Double.class);
 
-        isDogOnSafeArea();
+                myCircle = mMap.addCircle(new CircleOptions()
+                        .center(new LatLng(cirLat,cirLon))
+                        .radius(radio)
+                        .strokeColor(Color.GREEN)
+                        .fillColor(Color.GREEN)
+                );
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void isDogOnSafeArea(){
         float[] dist = new float[2];
         //TODO: Coordenadas de la zona seegura sacadas de firebase
-        Location.distanceBetween(mLat,mLon,28.70389,-106.124483,dist);
+        Location.distanceBetween(dogLat, dogLon,cirLat,cirLon,dist);
         if(dist[0]>myCircle.getRadius()){
             Toast.makeText(getApplicationContext(),"Mascota fuera de zona segura",Toast.LENGTH_SHORT).show();
         }
-//
-//        if(dist[0]<myCircle.getRadius()){
-//            //Esta dentro
-//            Toast.makeText(getApplicationContext(),"Esta dentro",Toast.LENGTH_SHORT).show();
-//        }else{
-//            //Esta fuera
-//            Toast.makeText(getApplicationContext(),"Esta afuera",Toast.LENGTH_SHORT).show();
-//        }
     }
 }

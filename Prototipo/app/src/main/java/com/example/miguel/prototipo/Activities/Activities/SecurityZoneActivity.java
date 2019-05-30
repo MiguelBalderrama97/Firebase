@@ -29,8 +29,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SecurityZoneActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference = database.getReference("usuarios").child(MainActivity.dueño);
     GoogleMap mMap;
 
     private View mapView;
@@ -105,10 +109,13 @@ public class SecurityZoneActivity extends AppCompatActivity implements OnMapRead
             public void onClick(View v) {
                 LatLng currentMarkerLocation = mMap.getCameraPosition().target;
 
-                //TODO: Agregar datos a Firebase
                 secLat = currentMarkerLocation.latitude;
                 secLon = currentMarkerLocation.longitude;
                 secRadius = Integer.parseInt(edtTxtCaptu.getText().toString());
+
+                reference.child("radio").setValue(secRadius);
+                reference.child("lat").setValue(secLat);
+                reference.child("lon").setValue(secLon);
 
 
                 Toast.makeText(getApplicationContext(), "Task succeful!", Toast.LENGTH_SHORT).show();
