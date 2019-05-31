@@ -181,4 +181,5 @@
     </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_security_zone">SecurityZoneActivity</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

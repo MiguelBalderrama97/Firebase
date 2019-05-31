@@ -2,12 +2,18 @@ package com.example.miguel.prototipo.Activities.Activities;
 
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.miguel.prototipo.Activities.Models.Perro;
@@ -41,7 +47,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class TestActivity extends AppCompatActivity implements OnMapReadyCallback {
+    EditText searchBar;
+    Button btnSearch;
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference("usuarios").child(MainActivity.dueño);
     private DatabaseReference referenceDog = database.getReference(MainActivity.PATH_DOGS);
@@ -191,14 +200,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_test);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        searchBar = findViewById(R.id.searchBar);
+        btnSearch = findViewById(R.id.btnSearch);
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchDog = searchBar.getText().toString();
+                for (Perro dog : perros){
+                    if(dog.getNombre().equals(searchDog)){
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                                dog.getLat(),dog.getLon()),DEFAULT_ZOOM));
+                        break;
+                    }
+                }
+            }
+        });
+
         tHiloMain.start();
     }
+
+
 
 
     /**
@@ -254,4 +282,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return ban;
     }
+
 }

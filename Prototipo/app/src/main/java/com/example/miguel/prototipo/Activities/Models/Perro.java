@@ -2,6 +2,8 @@ package com.example.miguel.prototipo.Activities.Models;
 
 import android.graphics.Bitmap;
 
+import com.google.android.gms.maps.model.Marker;
+
 public class Perro {
 
     private int icon, img1, img2, im3, edad, spinner;
@@ -11,6 +13,10 @@ public class Perro {
     //    DATOS POR SI ESTA DESAPARECIDO
     private String colonia, fecha;
     private boolean estatus;
+
+    private double lat,lon;
+    private boolean isOnSafeZone;
+    private Marker marker;
 
     public Perro(){}
 
@@ -28,6 +34,25 @@ public class Perro {
         this.colonia = "";
         this.fecha = "";
         this.spinner = spinner;
+    }
+
+    public Perro(int icon, int edad, int img1, int img2, int im3, String nombre, String raza, String dueño, boolean sexo, int spinner,int lat,int lon, boolean isOnSafeZone) {
+        this.icon = icon;
+        this.edad = edad;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.im3 = im3;
+        this.nombre = nombre;
+        this.raza = raza;
+        this.dueño = dueño;
+        this.sexo = sexo;
+        this.estatus = false;
+        this.colonia = "";
+        this.fecha = "";
+        this.spinner = spinner;
+        this.lat = lat;
+        this.lon = lon;
+        this.isOnSafeZone = isOnSafeZone;
     }
 
     public int getSpinner() {
@@ -140,5 +165,37 @@ public class Perro {
 
     public void setEstatus(boolean estatus) {
         this.estatus = estatus;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public boolean isOnSafeZone() {
+        return isOnSafeZone;
+    }
+
+    public void setOnSafeZone(boolean onSafeZone) {
+        isOnSafeZone = onSafeZone;
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
     }
 }

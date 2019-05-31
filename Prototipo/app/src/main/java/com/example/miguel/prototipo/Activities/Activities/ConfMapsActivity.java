@@ -35,7 +35,8 @@ public class ConfMapsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conf_maps);
 
-        inMapon = new Intent(this,MapsActivity.class);
+//        inMapon = new Intent(this,MapsActivity.class);
+        inMapon = new Intent(this,TestActivity.class);
         inSecurity = new Intent(this, SecurityZoneActivity.class);
 
         ConectionGps myConection = new ConectionGps();
@@ -50,21 +51,6 @@ public class ConfMapsActivity extends AppCompatActivity {
             case R.id.btnPick:
                 startActivity(inSecurity);
                 break;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-            if (requestCode == PLACE_PICKER_REQUEST) {
-                if (resultCode == RESULT_OK) {
-                    Place place = PlacePicker.getPlace(data, this);
-                    String toastMsg = String.format("Place: %s", place.getName());
-                    Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                }
-            }
         }
     }
 
